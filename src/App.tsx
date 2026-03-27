@@ -96,7 +96,7 @@ export default function App() {
     setTimeout(() => {
       try {
         const link = document.createElement('a');
-        link.download = `${title || 'mnemonic'}-wallpaper.png`;
+        link.download = `${title || 'firstletter'}-wallpaper.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
         confetti({
@@ -293,7 +293,7 @@ export default function App() {
     // Footer / Subtle Branding
     ctx.globalAlpha = 0.2;
     ctx.font = `300 ${Math.floor(canvas.width * 0.025)}px sans-serif`;
-    ctx.fillText('MNEMONIC WALLPAPER', canvas.width / 2, canvas.height - 100);
+    ctx.fillText('FIRSTLETTER', canvas.width / 2, canvas.height - 100);
 
   }, [title, mnemonic, selectedDevice, selectedTheme, textAlign]);
 
@@ -306,7 +306,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             className="text-5xl font-serif italic tracking-tight"
           >
-            Mnemonic
+            FirstLetter
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -314,7 +314,7 @@ export default function App() {
             transition={{ delay: 0.1 }}
             className="text-sm uppercase tracking-widest text-stone-500 mt-2 font-medium"
           >
-            Memorization Wallpaper Maker
+            Memorize any verse — one letter at a time
           </motion.p>
         </div>
         
@@ -399,7 +399,7 @@ export default function App() {
                   >
                     <Info size={14} className="shrink-0" />
                     <p>
-                      <strong>Note:</strong> This text is quite long ({content.length} chars). The mnemonic might be too small to read comfortably on the wallpaper. Consider breaking it into multiple wallpapers.
+                      <strong>Note:</strong> This text is quite long ({content.length} chars). The text might be too small to read comfortably on the wallpaper. Consider breaking it into multiple wallpapers.
                     </p>
                   </motion.div>
                 )}
@@ -517,7 +517,7 @@ export default function App() {
                     </div>
                     
                     <div className="absolute bottom-8 text-[8px] tracking-[0.2em] opacity-20 uppercase font-bold">
-                      Mnemonic Wallpaper
+                      FirstLetter
                     </div>
                   </div>
                 </div>
@@ -555,7 +555,7 @@ export default function App() {
       </main>
 
       <footer className="max-w-6xl mx-auto px-6 py-12 border-t border-stone-200 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-400 text-xs">
-        <p>© 2026 Mnemonic Wallpaper Maker</p>
+        <p>© 2026 FirstLetter</p>
         <div className="flex gap-6">
           <a href="#" className="hover:text-stone-600 transition-colors">Privacy</a>
           <a href="#" className="hover:text-stone-600 transition-colors">Terms</a>

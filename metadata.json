@@ -1,5 +1,5 @@
 {
-  "name": "Mnemonic Wallpaper Maker",
-  "description": "Create beautiful phone wallpapers from text using first-letter mnemonics to help with memorization.",
+  "name": "FirstLetter",
+  "description": "Create beautiful phone wallpapers from text using FirstLetter mnemonics to help with memorization.",
   "requestFramePermissions": []
 }
