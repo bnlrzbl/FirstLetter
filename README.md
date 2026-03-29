@@ -1,20 +1,22 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# FirstLetter
 
-# Run and deploy your AI Studio app
+**Memorize any verse — one letter at a time.**
 
-This contains everything you need to run your app locally.
+FirstLetter is a specialized tool designed to help you memorize any text, from famous quotes and poems to religious verses. By stripping your input down to just the first letter of each word, it creates a powerful mnemonic that forces your brain to actively recall the full content, significantly strengthening your memory through active retrieval.
 
-View your app in AI Studio: https://ai.studio/apps/afc22533-6c19-4f5d-a30b-7366fecca3c2
+## Key Features
 
-## Run Locally
+- **Mnemonic Generation**: Instantly convert any text into a first-letter mnemonic.
+- **Custom Wallpapers**: Turn your mnemonics into beautiful, high-resolution phone wallpapers.
+- **Aesthetic Themes**: Choose from several professionally designed themes like Midnight, Paper, Forest, and Deep Sea.
+- **Device Presets**: Optimized for the latest smartphones, including iPhone 16 Pro Max, Samsung S24 Ultra, and Pixel 9 Pro.
+- **Flexible Formatting**: Control text alignment, preserve original line breaks, or remove numbers to suit your memorization style.
+- **Passive Review**: Use your generated wallpaper as a lock screen for constant, effortless practice throughout the day.
 
-**Prerequisites:**  Node.js
+## How to Use
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+1. **Input**: Paste the text you want to memorize into the text area.
+2. **Customize**: Add an optional title, choose your alignment, and select a theme that fits your style.
+3. **Select Device**: Choose your target phone from the dropdown to ensure a perfect fit.
+4. **Export**: Click "Export Wallpaper" to download your custom mnemonic as a PNG.
+5. **Set as Lock Screen**: Transfer the image to your phone and set it as your wallpaper for on-the-go review.
