@@ -312,7 +312,7 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-sm uppercase tracking-widest text-stone-500 mt-2 font-medium"
+            className="text-[10px] sm:text-sm uppercase tracking-widest text-stone-500 mt-2 font-medium"
           >
             Memorize any verse — one letter at a time
           </motion.p>
@@ -331,7 +331,7 @@ export default function App() {
           <div className="bg-blue-50/50 rounded-2xl p-4 flex gap-3 text-blue-700/80">
             <Info size={18} className="shrink-0 mt-0.5" />
             <p className="text-xs leading-relaxed">
-              <strong>How it works:</strong> We keep only the first letter of every word. This forces your brain to recall the full word, strengthening neural pathways for memorization. Use the generated wallpaper as your lock screen for constant, passive practice.
+              <strong>How it works:</strong> Copy a few verses or any text you want to memorize. We strip it down to the first letter of each word and turn it into a phone wallpaper for you to review on the go.
             </p>
           </div>
 
@@ -350,38 +350,9 @@ export default function App() {
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <label className="text-[10px] uppercase tracking-widest font-bold text-stone-400 flex items-center gap-2">
-                  <RefreshCw size={12} /> Text to Memorize
-                </label>
-                <div className="flex items-center gap-4">
-                  <label className="flex items-center gap-2 cursor-pointer group">
-                    <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${removeNumbers ? 'bg-stone-900 border-stone-900' : 'border-stone-300 group-hover:border-stone-400'}`}>
-                      {removeNumbers && <Check size={10} className="text-white" />}
-                    </div>
-                    <input 
-                      type="checkbox" 
-                      className="hidden" 
-                      checked={removeNumbers}
-                      onChange={(e) => setRemoveNumbers(e.target.checked)}
-                    />
-                    <span className="text-[10px] uppercase tracking-widest font-bold text-stone-400 group-hover:text-stone-600 transition-colors">Remove Numbers</span>
-                  </label>
-
-                  <label className="flex items-center gap-2 cursor-pointer group">
-                    <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${keepLineBreaks ? 'bg-stone-900 border-stone-900' : 'border-stone-300 group-hover:border-stone-400'}`}>
-                      {keepLineBreaks && <Check size={10} className="text-white" />}
-                    </div>
-                    <input 
-                      type="checkbox" 
-                      className="hidden" 
-                      checked={keepLineBreaks}
-                      onChange={(e) => setKeepLineBreaks(e.target.checked)}
-                    />
-                    <span className="text-[10px] uppercase tracking-widest font-bold text-stone-400 group-hover:text-stone-600 transition-colors">Keep Line Breaks</span>
-                  </label>
-                </div>
-              </div>
+              <label className="text-[10px] uppercase tracking-widest font-bold text-stone-400 flex items-center gap-2">
+                <RefreshCw size={12} /> Text to Memorize
+              </label>
               <textarea 
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
@@ -389,6 +360,35 @@ export default function App() {
                 rows={8}
                 className="w-full bg-stone-50 border-none rounded-2xl px-4 py-4 focus:ring-2 focus:ring-stone-200 transition-all outline-none font-serif text-lg leading-relaxed resize-none"
               />
+              
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-2 border-t border-stone-100">
+                <label className="flex items-center gap-2 cursor-pointer group">
+                  <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${removeNumbers ? 'bg-stone-900 border-stone-900' : 'border-stone-300 group-hover:border-stone-400'}`}>
+                    {removeNumbers && <Check size={10} className="text-white" />}
+                  </div>
+                  <input 
+                    type="checkbox" 
+                    className="hidden" 
+                    checked={removeNumbers}
+                    onChange={(e) => setRemoveNumbers(e.target.checked)}
+                  />
+                  <span className="text-[10px] uppercase tracking-widest font-bold text-stone-400 group-hover:text-stone-600 transition-colors">Remove Numbers</span>
+                </label>
+
+                <label className="flex items-center gap-2 cursor-pointer group">
+                  <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${keepLineBreaks ? 'bg-stone-900 border-stone-900' : 'border-stone-300 group-hover:border-stone-400'}`}>
+                    {keepLineBreaks && <Check size={10} className="text-white" />}
+                  </div>
+                  <input 
+                    type="checkbox" 
+                    className="hidden" 
+                    checked={keepLineBreaks}
+                    onChange={(e) => setKeepLineBreaks(e.target.checked)}
+                  />
+                  <span className="text-[10px] uppercase tracking-widest font-bold text-stone-400 group-hover:text-stone-600 transition-colors">Keep Line Breaks</span>
+                </label>
+              </div>
+
               <AnimatePresence>
                 {isTooLong && (
                   <motion.div 
@@ -439,22 +439,21 @@ export default function App() {
                 <label className="text-[10px] uppercase tracking-widest font-bold text-stone-400 flex items-center gap-2">
                   <Smartphone size={12} /> Target Device
                 </label>
-                <div className="space-y-2">
+                <select
+                  value={selectedDevice.name}
+                  onChange={(e) => {
+                    const device = DEVICES.find(d => d.name === e.target.value);
+                    if (device) setSelectedDevice(device);
+                  }}
+                  className="w-full bg-stone-50 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-stone-200 transition-all outline-none text-sm font-medium text-stone-600 appearance-none cursor-pointer"
+                  style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'currentColor\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'org/19/9 5 7 7-7 7\' /%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1em' }}
+                >
                   {DEVICES.map((device) => (
-                    <button
-                      key={device.name}
-                      onClick={() => setSelectedDevice(device)}
-                      className={`w-full text-left px-4 py-2 rounded-xl text-sm transition-all flex items-center justify-between ${
-                        selectedDevice.name === device.name 
-                          ? 'bg-stone-900 text-white' 
-                          : 'hover:bg-stone-50 text-stone-600'
-                      }`}
-                    >
-                      <span>{device.name}</span>
-                      {selectedDevice.name === device.name && <Check size={14} />}
-                    </button>
+                    <option key={device.name} value={device.name}>
+                      {device.name} ({device.width}x{device.height})
+                    </option>
                   ))}
-                </div>
+                </select>
               </div>
             </div>
 
