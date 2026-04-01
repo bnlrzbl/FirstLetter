@@ -2,7 +2,7 @@
 
 **Memorize any verse — one letter at a time.**
 
-FirstLetter is a specialized tool designed to help you memorize any text, from famous quotes and poems to Bible verses. By stripping your input down to just the first letter of each word, it creates a powerful mnemonic that forces your brain to actively recall the full content, significantly strengthening your memory through active retrieval.
+FirstLetter is a specialized tool designed to help you memorize any text, from famous quotes and poems to religious verses. By stripping your input down to just the first letter of each word, it creates a powerful mnemonic that forces your brain to actively recall the full content, significantly strengthening your memory through active retrieval.
 
 ## Key Features
 
