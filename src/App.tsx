@@ -40,7 +40,7 @@ const THEMES: Theme[] = [
   { name: 'Forest Green', bg: '#2D4A3E', text: '#FFFFFF', accent: '#FFFFFF', font: 'sans-serif' },
   { name: 'Burgundy', bg: '#6B1D23', text: '#FFFFFF', accent: '#FFFFFF', font: 'sans-serif' },
   { name: 'Plum', bg: '#4A3B4E', text: '#FFFFFF', accent: '#FFFFFF', font: 'sans-serif' },
-  { name: 'Warm Taupe', bg: '#A69685', text: '#FFFFFF', accent: '#FFFFFF', font: 'sans-serif' },
+  { name: 'Off White', bg: '#F5F5F0', text: '#2D2D2D', accent: '#2D2D2D', font: 'sans-serif' },
 ];
 
 // --- Helper Functions ---
