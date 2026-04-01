@@ -39,7 +39,7 @@ const THEMES: Theme[] = [
   { name: 'Deep Navy', bg: '#1A2B3C', text: '#FFFFFF', accent: '#FFFFFF', font: 'sans-serif' },
   { name: 'Forest Green', bg: '#2D4A3E', text: '#FFFFFF', accent: '#FFFFFF', font: 'sans-serif' },
   { name: 'Burgundy', bg: '#6B1D23', text: '#FFFFFF', accent: '#FFFFFF', font: 'sans-serif' },
-  { name: 'Midnight Blue', bg: '#152238', text: '#FFFFFF', accent: '#FFFFFF', font: 'sans-serif' },
+  { name: 'Plum', bg: '#4A3B4E', text: '#FFFFFF', accent: '#FFFFFF', font: 'sans-serif' },
   { name: 'Warm Taupe', bg: '#A69685', text: '#FFFFFF', accent: '#FFFFFF', font: 'sans-serif' },
 ];
 
@@ -77,6 +77,7 @@ export default function App() {
   const [removeNumbers, setRemoveNumbers] = useState(false);
   const [keepLineBreaks, setKeepLineBreaks] = useState(true);
   const [textAlign, setTextAlign] = useState<'left' | 'center' | 'right'>('center');
+  const [fontFamily, setFontFamily] = useState<'sans' | 'serif' | 'mono'>('sans');
   const [selectedDevice, setSelectedDevice] = useState<Device>(DEVICES[0]);
   const [selectedTheme, setSelectedTheme] = useState<Theme>(THEMES[0]);
   const [isExporting, setIsExporting] = useState(false);
@@ -131,12 +132,19 @@ export default function App() {
     const padding = canvas.width * 0.15;
     const maxWidth = canvas.width - padding * 2;
     
+    const fontMap = {
+      sans: '"Inter", sans-serif',
+      serif: '"Libre Baskerville", serif',
+      mono: '"JetBrains Mono", monospace'
+    };
+    const currentFont = fontMap[fontFamily];
+
     // Draw Title
     ctx.fillStyle = selectedTheme.text;
     ctx.textAlign = 'center';
     
     const titleFontSize = Math.floor(canvas.width * 0.06);
-    ctx.font = `400 ${titleFontSize}px "Inter", sans-serif`;
+    ctx.font = `400 ${titleFontSize}px ${currentFont}`;
     
     const titleY = canvas.height * 0.15;
     if (title) {
@@ -159,7 +167,7 @@ export default function App() {
 
     // Dynamic Font Sizing Loop
     while (!fits && contentFontSize >= minFontSize) {
-      ctx.font = `400 ${contentFontSize}px "Inter", sans-serif`;
+      ctx.font = `400 ${contentFontSize}px ${currentFont}`;
       lineHeight = contentFontSize * 1.6;
       lines = [];
       
@@ -197,7 +205,7 @@ export default function App() {
     setCalculatedFontSize(contentFontSize);
 
     // Draw the calculated lines
-    ctx.font = `400 ${contentFontSize}px "Inter", sans-serif`;
+    ctx.font = `400 ${contentFontSize}px ${currentFont}`;
     ctx.textBaseline = 'middle';
     ctx.textAlign = textAlign;
     
@@ -213,11 +221,11 @@ export default function App() {
 
     // Footer / Subtle Branding
     ctx.globalAlpha = 0.3;
-    ctx.font = `400 ${Math.floor(canvas.width * 0.025)}px "Inter", sans-serif`;
+    ctx.font = `400 ${Math.floor(canvas.width * 0.025)}px ${currentFont}`;
     ctx.textAlign = 'center';
     ctx.fillText('FIRSTLETTER', canvas.width / 2, canvas.height - 100);
 
-  }, [title, mnemonic, selectedDevice, selectedTheme, textAlign]);
+  }, [title, mnemonic, selectedDevice, selectedTheme, textAlign, fontFamily]);
 
   return (
     <div className="min-h-screen bg-[#f9f8f3] text-[#141414] font-sans selection:bg-stone-200">
@@ -315,8 +323,55 @@ export default function App() {
                 ))}
               </div>
             </div>
-            
+
             <div className="space-y-3">
+              <label className="text-[11px] uppercase tracking-widest font-bold text-stone-400">
+                Font Family
+              </label>
+              <div className="flex bg-stone-100 p-1 rounded-xl">
+                {['Sans', 'Serif', 'Mono'].map((font) => (
+                  <button 
+                    key={font}
+                    onClick={() => setFontFamily(font.toLowerCase() as any)}
+                    className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${fontFamily === font.toLowerCase() ? 'bg-white shadow-sm text-stone-900' : 'text-stone-400 hover:text-stone-600'}`}
+                  >
+                    {font}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-4 md:col-span-2">
+              <label className="text-[11px] uppercase tracking-widest font-bold text-stone-400">
+                Background Color
+              </label>
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+                {THEMES.map((theme) => (
+                  <button
+                    key={theme.name}
+                    onClick={() => setSelectedTheme(theme)}
+                    className="flex flex-col items-center gap-2 group"
+                  >
+                    <div 
+                      className={`w-full aspect-square rounded-xl flex items-center justify-center transition-all duration-300 border-2 ${
+                        selectedTheme.name === theme.name ? 'border-stone-900 scale-95 shadow-md' : 'border-transparent hover:scale-105'
+                      }`}
+                      style={{ backgroundColor: theme.bg }}
+                    >
+                      <span className="text-lg font-medium" style={{ 
+                        color: theme.text,
+                        fontFamily: fontFamily === 'sans' ? '"Inter", sans-serif' : fontFamily === 'serif' ? '"Libre Baskerville", serif' : '"JetBrains Mono", monospace'
+                      }}>Aa</span>
+                    </div>
+                    <span className={`text-[8px] font-bold uppercase tracking-tight transition-colors text-center leading-tight ${selectedTheme.name === theme.name ? 'text-stone-900' : 'text-stone-400'}`}>
+                      {theme.name}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+            
+            <div className="space-y-3 md:col-span-2">
               <label className="text-[11px] uppercase tracking-widest font-bold text-stone-400">
                 Target Device
               </label>
@@ -355,7 +410,7 @@ export default function App() {
                   style={{ 
                     backgroundColor: selectedTheme.bg,
                     color: selectedTheme.text,
-                    fontFamily: '"Inter", sans-serif'
+                    fontFamily: fontFamily === 'sans' ? '"Inter", sans-serif' : fontFamily === 'serif' ? '"Libre Baskerville", serif' : '"JetBrains Mono", monospace'
                   }}
                 >
                   <div className="px-10 w-full space-y-10" style={{ textAlign: textAlign }}>
@@ -396,56 +451,31 @@ export default function App() {
           </div>
         </section>
 
-        {/* Right Section: Themes & Export */}
-        <section className="lg:col-span-3 space-y-10">
-          <div className="space-y-6">
-            <label className="text-[11px] uppercase tracking-widest font-bold text-stone-400">
-              Aesthetic Theme
-            </label>
-            <div className="grid grid-cols-2 gap-4">
-              {THEMES.map((theme) => (
-                <button
-                  key={theme.name}
-                  onClick={() => setSelectedTheme(theme)}
-                  className="flex flex-col items-center gap-3 group"
-                >
-                  <div 
-                    className={`w-full aspect-square rounded-2xl flex items-center justify-center transition-all duration-300 border-2 ${
-                      selectedTheme.name === theme.name ? 'border-stone-900 scale-95 shadow-lg' : 'border-transparent hover:scale-105'
-                    }`}
-                    style={{ backgroundColor: theme.bg }}
-                  >
-                    <span className="text-2xl font-medium" style={{ color: theme.text }}>Aa</span>
-                  </div>
-                  <span className={`text-[10px] font-bold uppercase tracking-wider transition-colors ${selectedTheme.name === theme.name ? 'text-stone-900' : 'text-stone-400'}`}>
-                    {theme.name}
-                  </span>
-                </button>
-              ))}
+        {/* Right Section: Export */}
+        <section className="lg:col-span-3 space-y-6 lg:pt-0">
+          <div className="bg-white rounded-2xl p-8 card-shadow border border-stone-100 space-y-6">
+            <div className="space-y-4">
+              <button
+                onClick={handleExport}
+                disabled={!content || isExporting}
+                className={`w-full py-4 rounded-xl flex items-center justify-center gap-3 font-bold transition-all shadow-xl active:scale-95 ${
+                  !content || isExporting
+                    ? 'bg-stone-200 text-stone-400 cursor-not-allowed'
+                    : 'bg-[#2D2D2D] text-white hover:bg-black hover:-translate-y-1'
+                }`}
+              >
+                {isExporting ? (
+                  <RefreshCw size={18} className="animate-spin" />
+                ) : (
+                  <Download size={18} />
+                )}
+                {isExporting ? 'Generating...' : 'Export Wallpaper'}
+              </button>
+              
+              <p className="text-center text-[10px] text-stone-400 uppercase tracking-widest font-bold">
+                High-resolution PNG • {selectedDevice.width}x{selectedDevice.height}
+              </p>
             </div>
-          </div>
-
-          <div className="space-y-4 pt-4">
-            <button
-              onClick={handleExport}
-              disabled={!content || isExporting}
-              className={`w-full py-4 rounded-xl flex items-center justify-center gap-3 font-bold transition-all shadow-xl active:scale-95 ${
-                !content || isExporting
-                  ? 'bg-stone-200 text-stone-400 cursor-not-allowed'
-                  : 'bg-[#2D2D2D] text-white hover:bg-black hover:-translate-y-1'
-              }`}
-            >
-              {isExporting ? (
-                <RefreshCw size={18} className="animate-spin" />
-              ) : (
-                <Download size={18} />
-              )}
-              {isExporting ? 'Generating...' : 'Export Wallpaper'}
-            </button>
-            
-            <p className="text-center text-[10px] text-stone-400 uppercase tracking-widest font-bold">
-              High-resolution PNG • {selectedDevice.width}x{selectedDevice.height}
-            </p>
           </div>
         </section>
       </main>
